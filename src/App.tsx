@@ -19,6 +19,16 @@ type Values = {
   data: Data[]
 }
 
+class CsvDataItem {
+  Product: string;
+  Price: number;
+
+  constructor(value: Data){
+    this.Product = value.Product;
+    this.Price = +value.Price;
+  }
+}
+
 const columns: ColumnsType<Data> = [
   {
     title: 'Product',
@@ -131,7 +141,7 @@ const App: React.FC = () => {
             delimiter: ",",
             complete: (results: ParseResult<Data>) => {
               setData(results);
-              csvData = results.data;
+              csvData = results?.data.map(item => new CsvDataItem(item));
             },
           })
       }
